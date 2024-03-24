@@ -7,6 +7,8 @@ Building GUI desktop apps in python
 
 ## issues:
 
+
+
 ## Resources used:
 
 https://www.toptal.com/developers/gitignore/
