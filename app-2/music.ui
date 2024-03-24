@@ -86,7 +86,7 @@ padding:3px;</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="res.qrc">:/img/utils/images/app_icon.png</pixmap>
+             <pixmap>:/img/utils/images/app_icon.png</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -169,7 +169,7 @@ QPushButton:hover{
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="res.qrc">
+             <iconset>
               <normaloff>:/img/utils/images/min.png</normaloff>:/img/utils/images/min.png</iconset>
             </property>
             <property name="flat">
@@ -206,7 +206,7 @@ QPushButton:hover{
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="res.qrc">
+             <iconset>
               <normaloff>:/img/utils/images/sliderHandle.png</normaloff>:/img/utils/images/sliderHandle.png</iconset>
             </property>
             <property name="flat">
@@ -249,7 +249,7 @@ QPushButton:pressed{
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="res.qrc">
+             <iconset>
               <normaloff>:/img/utils/images/quit.png</normaloff>:/img/utils/images/quit.png</iconset>
             </property>
             <property name="flat">
@@ -377,7 +377,7 @@ color: rgb(79, 208, 178);</string>
                    <string/>
                   </property>
                   <property name="pixmap">
-                   <pixmap resource="res.qrc">:/img/utils/images/current-music.png</pixmap>
+                   <pixmap>:/img/utils/images/current-music.png</pixmap>
                   </property>
                   <property name="scaledContents">
                    <bool>true</bool>
@@ -505,7 +505,7 @@ border-radius:12px;</string>
                 <string>  Add to Favourites</string>
                </property>
                <property name="icon">
-                <iconset resource="res.qrc">
+                <iconset>
                  <normaloff>:/img/utils/images/like.png</normaloff>:/img/utils/images/like.png</iconset>
                </property>
                <property name="iconSize">
@@ -543,7 +543,7 @@ border-radius:12px;</string>
                 <string>  Add to Playlist</string>
                </property>
                <property name="icon">
-                <iconset resource="res.qrc">
+                <iconset>
                  <normaloff>:/img/utils/images/music_list.png</normaloff>:/img/utils/images/music_list.png</iconset>
                </property>
                <property name="iconSize">
@@ -692,7 +692,7 @@ border-radius:5px;</string>
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="res.qrc">
+                       <iconset>
                         <normaloff>:/img/utils/images/addFromLocal.png</normaloff>:/img/utils/images/addFromLocal.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -716,7 +716,7 @@ border-radius:5px;</string>
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="res.qrc">
+                       <iconset>
                         <normaloff>:/img/utils/images/clear.png</normaloff>:/img/utils/images/clear.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -740,7 +740,7 @@ border-radius:5px;</string>
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="res.qrc">
+                       <iconset>
                         <normaloff>:/img/utils/images/remove.png</normaloff>:/img/utils/images/remove.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -975,8 +975,8 @@ QPushButton:hover{
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="res.qrc">
-              <normaloff>:/img/utils/images/pase.png</normaloff>:/img/utils/images/pase.png</iconset>
+             <iconset>
+              <normaloff>utils/images/pase.png</normaloff>utils/images/pase.png</iconset>
             </property>
             <property name="flat">
              <bool>true</bool>
@@ -1012,8 +1012,8 @@ QPushButton:hover{
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="res.qrc">
-              <normaloff>:/img/utils/images/play.png</normaloff>:/img/utils/images/play.png</iconset>
+             <iconset>
+              <normaloff>utils/images/play.png</normaloff>utils/images/play.png</iconset>
             </property>
             <property name="flat">
              <bool>true</bool>
@@ -1049,7 +1049,7 @@ QPushButton:hover{
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="res.qrc">
+             <iconset>
               <normaloff>:/img/utils/images/sliderHandle.png</normaloff>:/img/utils/images/sliderHandle.png</iconset>
             </property>
             <property name="flat">
@@ -1086,7 +1086,7 @@ QPushButton:hover{
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="res.qrc">
+             <iconset>
               <normaloff>:/img/utils/images/pre.png</normaloff>:/img/utils/images/pre.png</iconset>
             </property>
             <property name="flat">
@@ -1129,7 +1129,7 @@ QPushButton:hover{
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="res.qrc">
+             <iconset>
               <normaloff>:/img/utils/images/next.png</normaloff>:/img/utils/images/next.png</iconset>
             </property>
             <property name="iconSize">
