@@ -86,7 +86,7 @@
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
@@ -452,7 +452,7 @@ background-color: rgb(255, 140, 64);</string>
      </rect>
     </property>
     <property name="cursor">
-     <cursorShape>OpenHandCursor</cursorShape>
+     <cursorShape>ClosedHandCursor</cursorShape>
     </property>
     <property name="minimum">
      <number>1</number>
@@ -500,7 +500,7 @@ background-color: rgb(255, 140, 64);</string>
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
@@ -835,6 +835,22 @@ margin: -2px 0;
       <string>00:00:00/00:00:00</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>80</y>
+      <width>511</width>
+      <height>381</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 50);
+border-radius: 10px;</string>
+    </property>
+    <widget class="QWidget" name="page"/>
+    <widget class="QWidget" name="page_2"/>
    </widget>
   </widget>
  </widget>
