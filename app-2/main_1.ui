@@ -842,7 +842,7 @@ margin: -2px 0;
       <x>350</x>
       <y>80</y>
       <width>511</width>
-      <height>381</height>
+      <height>321</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -979,7 +979,7 @@ border-radius: 6px;</string>
         <x>20</x>
         <y>110</y>
         <width>471</width>
-        <height>261</height>
+        <height>191</height>
        </rect>
       </property>
       <property name="font">
@@ -1020,6 +1020,60 @@ padding: 10px;</string>
      </widget>
     </widget>
     <widget class="QWidget" name="page_2"/>
+   </widget>
+   <widget class="QFrame" name="frame_4">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>420</y>
+      <width>471</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 10px;
+</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="song_list_btn">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>93</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255,255, 127);
+border-radius: 15px</string>
+     </property>
+     <property name="text">
+      <string>Song List</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="playlist_btn">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>10</y>
+       <width>93</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255,255, 127);
+border-radius: 15px</string>
+     </property>
+     <property name="text">
+      <string>Playlist</string>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>
