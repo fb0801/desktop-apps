@@ -448,7 +448,7 @@ background-color: rgb(255, 140, 64);</string>
       <x>90</x>
       <y>370</y>
       <width>121</width>
-      <height>91</height>
+      <height>111</height>
      </rect>
     </property>
     <property name="cursor">
@@ -471,7 +471,7 @@ background-color: rgb(255, 140, 64);</string>
     <property name="geometry">
      <rect>
       <x>140</x>
-      <y>400</y>
+      <y>410</y>
       <width>31</width>
       <height>21</height>
      </rect>
@@ -1318,6 +1318,51 @@ border-radius: 15px
     </layout>
    </widget>
   </widget>
+  <action name="actionPlay">
+   <property name="icon">
+    <iconset resource="res_1.qrc">
+     <normaloff>:/img/utils/images/pase.png</normaloff>:/img/utils/images/pase.png</iconset>
+   </property>
+   <property name="text">
+    <string>Play</string>
+   </property>
+   <property name="toolTip">
+    <string>Play</string>
+   </property>
+  </action>
+  <action name="actionPause_Unpase">
+   <property name="icon">
+    <iconset resource="res_1.qrc">
+     <normaloff>:/img/utils/images/play.png</normaloff>:/img/utils/images/play.png</iconset>
+   </property>
+   <property name="text">
+    <string>Pause/Unpase</string>
+   </property>
+  </action>
+  <action name="actionNext">
+   <property name="icon">
+    <iconset resource="res_1.qrc">
+     <normaloff>:/img/utils/images/next.png</normaloff>:/img/utils/images/next.png</iconset>
+   </property>
+   <property name="text">
+    <string>Next</string>
+   </property>
+   <property name="toolTip">
+    <string>Next</string>
+   </property>
+  </action>
+  <action name="actionPrevious">
+   <property name="icon">
+    <iconset resource="res_1.qrc">
+     <normaloff>:/img/utils/images/pre.png</normaloff>:/img/utils/images/pre.png</iconset>
+   </property>
+   <property name="text">
+    <string>Previous</string>
+   </property>
+   <property name="toolTip">
+    <string>Previous</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="res_1.qrc"/>
@@ -1352,6 +1397,22 @@ border-radius: 15px
     <hint type="destinationlabel">
      <x>439</x>
      <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>volume_dial</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>volume_label</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>150</x>
+     <y>415</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>155</x>
+     <y>410</y>
     </hint>
    </hints>
   </connection>
