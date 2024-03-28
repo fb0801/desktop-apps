@@ -1,8 +1,8 @@
-from PyQt5.QtGui import QMouseEvent
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import *
 from music import Ui_MusicApp
 from PyQt5.QtCore import Qt
-
+import os
 
 class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
     def __init__(self):
@@ -46,4 +46,12 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
             filter='supported files (mp3, mpeg, ogg, m4a, ,p3, wma, ac, amr)'
         )
         if files:
-            print(files)
+           for file in files:
+               self.loaded_songs_listWidget.addItem(
+                   QListWidget(
+                       QIcon(':/img/utils/images/MusicListItem.png'),
+                       os.path.basename(file)
+
+                   )
+               )
+
