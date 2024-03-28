@@ -18,4 +18,12 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         #Intial position of the window
         self.initialPosition = self.pos()
 
+        def moveApp(event):
+            if event.buttons() == Qt.LeftButton:
+                self.move(self.pos() + event.globalPos() - self.initialPosition)
+                self.initialPosition = event.globalPos()
+                event.accept()
+
+        self.title_frame.mouseMoveEvent = moveApp
+
         self.show()
