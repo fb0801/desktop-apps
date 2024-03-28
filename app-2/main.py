@@ -1,3 +1,4 @@
+from PyQt5.QtGui import QMouseEvent
 from PyQt5.QtWidgets import *
 from music import Ui_MusicApp
 from PyQt5.QtCore import Qt
@@ -18,6 +19,13 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         #Intial position of the window
         self.initialPosition = self.pos()
 
+
+        #connections
+        #default page
+        self.add_songs_btn.clicked.connect(self.add_songs)
+
+        self.show()
+
         def moveApp(event):
             if event.buttons() == Qt.LeftButton:
                 self.move(self.pos() + event.globalPos() - self.initialPosition)
@@ -26,4 +34,16 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
 
         self.title_frame.mouseMoveEvent = moveApp
 
-        self.show()
+
+    # func to handle mouse pos
+    def mousePressEvent(self, event):
+        self.initialPosition = event.globalPos()
+
+    # add songs
+    def add_songs(self):
+        files = QFileDialog.getOpenFileNames(
+            self, caption='Add songs', directory=':\\',
+            filter='supported files (mp3, mpeg, ogg, m4a, ,p3, wma, ac, amr)'
+        )
+        if files:
+            print(files)
