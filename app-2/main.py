@@ -2,7 +2,8 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import *
 from music import Ui_MusicApp
 from PyQt5.QtCore import Qt
-import os
+import os.path
+import songs
 
 class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
     def __init__(self):
@@ -47,6 +48,7 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         )
         if files:
            for file in files:
+               songs.current_song_list.append(file)
                self.loaded_songs_listWidget.addItem(
                    QListWidget(
                        QIcon(':/img/utils/images/MusicListItem.png'),
