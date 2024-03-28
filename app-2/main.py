@@ -16,6 +16,10 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.SetWindowFlags(Qt.FrameLessWindowHint)
 
+        #create player
+        self.player = QMediaPlayer()
+        
+
 
         #Intial position of the window
         self.initialPosition = self.pos()
