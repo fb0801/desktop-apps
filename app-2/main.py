@@ -37,6 +37,11 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
 
         #create player
         self.player = QMediaPlayer()
+        self.initial_volume = 20
+        self.player.setVolume(self.initial_volume)
+        self.volume_dial.setValue(self.initial_volume)
+        self.volume_label.setText(f"{self.initial_volume}")
+
         
 
 
@@ -50,6 +55,7 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.play_btn.clicked.connect(self.play_song())
         self.pause_btn.clicked.connect(self.pause_and_unpause)
         self.stop_btn.clicked.connect(self.stop_song)
+        self.volume_dial.valueChanged.connect(lambda: self.volume_changed())
 
         self.show()
 
@@ -113,3 +119,12 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
             self.player.stop()
         except Exception as e:
             print(f"stop song error {e}")
+
+#func to change volume
+    def volume_changed(self):
+        try:
+            self.initial_volume = self.volume_dial.value()
+            self.player.setVolume(self.initial_volume)
+
+        except Exception as e:
+            print(f"volume change error: {e}")
