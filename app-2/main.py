@@ -49,6 +49,7 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.add_songs_btn.clicked.connect(self.add_songs)
         self.play_btn.clicked.connect(self.play_song())
         self.pause_btn.clicked.connect(self.pause_and_unpause)
+        self.stop_btn.clicked.connect(self.stop_song)
 
         self.show()
 
@@ -91,6 +92,9 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
             song_url = QMediaContent(QUrl.fromLocalFile(current_song))
             self.player.setMedia(song_url)
             self.player.play()
+
+            self.current_song_name.setText(f'{os.path.basename(current_song)}')
+            self.current_song_path.setText(f'{os.path.dirname(current_song)}')
         except Exception as e:
             print(f"play song error {e}")
 
@@ -101,3 +105,11 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
             self.player.pause()
         else:
             self.player.play()
+
+#stop song
+    def stop_song(self):
+        try:
+            
+            self.player.stop()
+        except Exception as e:
+            print(f"stop song error {e}")
