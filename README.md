@@ -7,6 +7,12 @@ Building GUI desktop apps in python
 
 ## issues:
 
+## helpful:
+
+
+
+command to create music.py file -> pyuic5 -x main.ui -o music.py
+
 
 
 ## Resources used:
