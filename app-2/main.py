@@ -1,7 +1,6 @@
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import *
 from music import Ui_MusicApp
-from PyQt5.QtCore import Qt
 import os.path
 import songs
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
@@ -27,6 +26,15 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.SetWindowFlags(Qt.FrameLessWindowHint)
 
+        #globals
+        global stopped 
+        global looped 
+        global is_shuffled 
+
+        stopped = False
+        looped = True
+        is_shuffled = False
+
         #create player
         self.player = QMediaPlayer()
         
@@ -40,6 +48,7 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         #default page
         self.add_songs_btn.clicked.connect(self.add_songs)
         self.play_btn.clicked.connect(self.play_song())
+        self.pause_btn.clicked.connect(self.pause_and_unpause)
 
         self.show()
 
@@ -84,3 +93,11 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
             self.player.play()
         except Exception as e:
             print(f"play song error {e}")
+
+
+    #pause song
+    def pause_and_unpause(self):
+        if self.player.state() == QMediaPlayer.PlayingState:
+            self.player.pause()
+        else:
+            self.player.play()
