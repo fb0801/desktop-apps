@@ -4,7 +4,17 @@ from music import Ui_MusicApp
 from PyQt5.QtCore import Qt
 import os.path
 import songs
-from PyQt5.QtMultimedia import QMediaPlayer
+from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
+
+
+import random
+import time
+
+from PyQt5 import QtWidgets, QtGui
+from PyQt5.QtCore import Qt, QUrl, QTimer
+
+
+
 
 class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
     def __init__(self):
@@ -29,6 +39,7 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         #connections
         #default page
         self.add_songs_btn.clicked.connect(self.add_songs)
+        self.play_btn.clicked.connect(self.play_song())
 
         self.show()
 
@@ -64,4 +75,12 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
 
     #play song
     def play_song(self):
-        
+        try:
+            current_selection = self.loaded_songs_listWidget.currentRow()
+            current_song = songs.current_song_list[current_selection]
+
+            song_url = QMediaContent(QUrl.fromLocalFile(current_song))
+            self.player.setMedia(song_url)
+            self.player.play()
+        except Exception as e:
+            print(f"play song error {e}")
