@@ -4,6 +4,7 @@ from music import Ui_MusicApp
 from PyQt5.QtCore import Qt
 import os.path
 import songs
+from PyQt5.QtMultimedia import QMediaPlayer
 
 class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
     def __init__(self):
@@ -61,3 +62,6 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
                    )
                )
 
+    #play song
+    def play_song(self):
+        
