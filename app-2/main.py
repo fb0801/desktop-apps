@@ -63,6 +63,7 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.play_btn.clicked.connect(self.play_song())
         self.pause_btn.clicked.connect(self.pause_and_unpause)
         self.stop_btn.clicked.connect(self.stop_song)
+        self.next_btn.clicked.connect(self.next_song)
         self.volume_dial.valueChanged.connect(lambda: self.volume_changed())
 
         self.show()
@@ -155,3 +156,35 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
 
         except Exception as e:
             print(f"volume change error: {e}")
+
+#next song
+    def next_song(self):
+        try:
+            song_index = self.loaded_songs_listWidget.currentRow()
+            next_index = song_index + 1
+            next_song = songs.current_song_list[next_index]
+            song_url = QMediaContent(QUrl.fromLocalFile(next_song))
+            self.player.setMedia(song_url)
+            self.player.play()
+            self.loaded_songs_listWidget.setCurrentRow(next_index)
+
+            self.current_song_name.setText(f'{os.path.basename(next_song)}')
+            self.current_song_path.setText(f'{os.path.dirname(next_song)}')
+        except Exception as e:
+            print(f"Next song error: {e}")
+
+    #prev song
+    def previous_song(self):
+        try:
+            song_index = self.loaded_songs_listWidget.currentRow()
+            previous_index = song_index - 1
+            previous_song = songs.current_song_list[previous_index]
+            song_url = QMediaContent(QUrl.fromLocalFile(previous_song))
+            self.player.setMedia(song_url)
+            self.player.play()
+            self.loaded_songs_listWidget.setCurrentRow(previous_index)
+
+            self.current_song_name.setText(f'{os.path.basename(previous_song)}')
+            self.current_song_path.setText(f'{os.path.dirname(previous_song)}')
+        except Exception as e:
+            print(f"Next song error: {e}")
