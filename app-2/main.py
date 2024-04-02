@@ -158,28 +158,25 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         except Exception as e:
             print(f"volume change error: {e}")
 
+    def default_next(self):
+
+    def default(self):
+    
+    def default(self):
+
 #next song
     def next_song(self):
         try:
-            current_media = self.player.media()
-            current_song_url = current_media.canonicalUrl().path()[1:]
-            song_index = songs.current_song_list.index(current_song_url)
-            next_index = song_index + 1
-            next_song = songs.current_song_list[next_index]
-            song_url = QMediaContent(QUrl.fromLocalFile(next_song))
-            self.player.setMedia(song_url)
-            self.player.play()
-            self.loaded_songs_listWidget.setCurrentRow(next_index)
-
-            self.current_song_name.setText(f'{os.path.basename(next_song)}')
-            self.current_song_path.setText(f'{os.path.dirname(next_song)}')
+            
         except Exception as e:
             print(f"Next song error: {e}")
 
     #prev song
     def previous_song(self):
         try:
-            song_index = self.loaded_songs_listWidget.currentRow()
+            current_media = self.player.media()
+            current_song_url = current_media.canonicalUrl().path()[1:]
+            song_index = songs.current_song_list.index(current_song_url)
             previous_index = song_index - 1
             previous_song = songs.current_song_list[previous_index]
             song_url = QMediaContent(QUrl.fromLocalFile(previous_song))
