@@ -161,7 +161,9 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
 #next song
     def next_song(self):
         try:
-            song_index = self.loaded_songs_listWidget.currentRow()
+            current_media = self.player.media()
+            current_song_url = current_media.canonicalUrl().path()[1:]
+            song_index = songs.current_song_list.index(current_song_url)
             next_index = song_index + 1
             next_song = songs.current_song_list[next_index]
             song_url = QMediaContent(QUrl.fromLocalFile(next_song))
