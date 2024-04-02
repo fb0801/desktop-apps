@@ -48,9 +48,17 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         #Intial position of the window
         self.initialPosition = self.pos()
 
+        #slider timer
+        self.timer = QTimer(self)
+        self.timer.start(1000)
+        self.timer.timeout.connect(self.move_slider())
+
 
         #connections
         #default page
+        self.music_slider.sliderMoved[int].connect(
+            lambda: self.player.setPosition(self.music_slider.value())
+        )
         self.add_songs_btn.clicked.connect(self.add_songs)
         self.play_btn.clicked.connect(self.play_song())
         self.pause_btn.clicked.connect(self.pause_and_unpause)
@@ -82,9 +90,13 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
                 self.music_slider.setMinimum(0)
                 self.music_slider.setMaximum(self.player.duration())
                 slider_position = self.player.position()
+                self.music_slider.SetValue(slider_position)
 
-                print(f"Duration:{self.player.duration()}")
-                print(f"Current: {slider_position}")
+                #change time lbls
+                current_time = time.strftime("%H:%M:%S", time.localtime(self.player.position() / 1000))
+                song_duration = time.strftime("%H:%M:%S", time.localtime(self.player.duration() / 1000))
+                self.time_label.setText(f"{current_time} / {song_duration}")
+                
 
 
     # add songs
