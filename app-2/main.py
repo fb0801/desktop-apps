@@ -159,17 +159,100 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
             print(f"volume change error: {e}")
 
     def default_next(self):
+        try:
+            if self.stackedWidget.currentIndex() == 0:
+                current_media = self.player.media()
+                current_song_url = current_media.canonicalUrl().path()[1:]
 
-    def default(self):
+                song_index = songs.current_song_list.index(current_song_url)
+                if song_index + 1 == len(songs.current_song_list):
+                    next_index = 0
+                else:
+                    next_index = song_index + 1
+                next_song = songs.current_song_list[next_index]
+                self.loaded_songs_listWidget.setCurrentRow(next_index)
+            elif self.stackedWidget.currentIndex() == 2:
+                current_media = self.player.media()
+                current_song_url = current_media.canonicalUrl().path()[1:]
+
+                song_index = songs.favourites_songs_list.index(current_song_url)
+                if song_index + 1 == len(songs.favourites_songs_list):
+                    next_index = 0
+                else:
+                    next_index = song_index + 1
+                next_song = songs.favourites_songs_list[next_index]
+                self.favourites_listWidget.setCurrentRow(next_index)
+
+            song_url = QMediaContent(QUrl.fromLocalFile(next_song))
+            self.player.setMedia(song_url)
+            self.player.play()
+
+            self.current_song_name.setText(f'{os.path.basename(next_song)}')
+            self.current_song_path.setText(f'{os.path.dirname(next_song)}')
+        except Exception as e:
+            print(f"Default Next error: {e}")
+
+    def looped_next(self):
+        try:
+            if self.stackedWidget.currentIndex() == 0:
+                current_media = self.player.media()
+                current_song_url = current_media.canonicalUrl().path()[1:]
+
+                song_index = songs.current_song_list.index(current_song_url)
+
+                song = songs.current_song_list[song_index]
+            elif self.stackedWidget.currentIndex() == 2:
+                current_media = self.player.media()
+                current_song_url = current_media.canonicalUrl().path()[1:]
+
+                song_index = songs.favourites_songs_list.index(current_song_url)
+
+                song = songs.favourites_songs_list[song_index]
+            song_url = QMediaContent(QUrl.fromLocalFile(song))
+            self.player.setMedia(song_url)
+            self.player.play()
+            self.loaded_songs_listWidget.setCurrentRow(song_index)
+
+            self.current_song_name.setText(f'{os.path.basename(song)}')
+            self.current_song_path.setText(f'{os.path.dirname(song)}')
+        except Exception as e:
+            print(f"Looped Next: {e}")
+
     
-    def default(self):
+    def shuffled_next(self):
+        try:
+            if self.stackedWidget.currentIndex() == 0:
+                next_index = random.randint(0, len(songs.current_song_list))
+                next_song = songs.current_song_list[next_index]
+                self.loaded_songs_listWidget.setCurrentRow(next_index)
+            elif self.stackedWidget.currentIndex() == 2:
+                next_index = random.randint(0, len(songs.favourites_songs_list))
+                next_song = songs.favourites_songs_list[next_index]
+                self.favourites_listWidget.setCurrentRow(next_index)
+            song_url = QMediaContent(QUrl.fromLocalFile(next_song))
+            self.player.setMedia(song_url)
+            self.player.play()
+
+            self.current_song_name.setText(f'{os.path.basename(next_song)}')
+            self.current_song_path.setText(f'{os.path.dirname(next_song)}')
+        except Exception as e:
+            print(f"Shuffled next error: {e}")
 
 #next song
     def next_song(self):
         try:
-            
+            global looped
+            global is_shuffled
+
+            if is_shuffled:
+                self.shuffled_next()
+            elif looped:
+                self.looped_next()
+            else:
+                self.default_next()
+
         except Exception as e:
-            print(f"Next song error: {e}")
+            print(f"Next Song error: {e}")
 
     #prev song
     def previous_song(self):
