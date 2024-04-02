@@ -64,6 +64,7 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.pause_btn.clicked.connect(self.pause_and_unpause)
         self.stop_btn.clicked.connect(self.stop_song)
         self.next_btn.clicked.connect(self.next_song)
+        self.previous_btn.clicked.connect(self.previous_song)
         self.volume_dial.valueChanged.connect(lambda: self.volume_changed())
 
         self.show()
