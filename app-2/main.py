@@ -72,6 +72,21 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
     def mousePressEvent(self, event):
         self.initialPosition = event.globalPos()
 
+    #move slider
+    def move_slider(self):
+        if stopped:
+            return 
+        else: 
+            #update
+            if self.player.state() == QMediaPlayer.PlayingState:
+                self.music_slider.setMinimum(0)
+                self.music_slider.setMaximum(self.player.duration())
+                slider_position = self.player.position()
+
+                print(f"Duration:{self.player.duration()}")
+                print(f"Current: {slider_position}")
+
+
     # add songs
     def add_songs(self):
         files = QFileDialog.getOpenFileNames(
