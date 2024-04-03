@@ -90,6 +90,23 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.volume_dial.valueChanged.connect(lambda: self.volume_changed())
         self.add_to_fav_btn.clicked.connect(self.add_song_to_favourites)
 
+        # FAVOURITES
+        self.delete_selected_favourite_btn.clicked.connect(self.remove_song_from_favourites)
+        self.delete_all_favourites_btn.clicked.connect(self.remove_all_songs_from_favourites)
+
+        # Favourite Actions
+        self.actionAdd_Selected_to_Favourites.triggered.connect(self.add_song_to_favourites)
+        self.actionAdd_all_to_Favouries.triggered.connect(self.add_all_songs_to_favourites)
+        self.actionRemove_Selected_Favourite.triggered.connect(self.remove_song_from_favourites)
+        self.actionRemove_All_Favourites.triggered.connect(self.remove_all_songs_from_favourites)
+
+        # PLAYLISTS
+        self.playlists_listWidget.itemDoubleClicked.connect(self.show_playlist_content)
+        self.new_playlist_btn.clicked.connect(self.new_playlist)
+        self.remove_selected_playlist_btn.clicked.connect(self.delete_playlist)
+        self.remove_all_playlists_btn.clicked.connect(self.delete_all_playlists)
+        self.add_to_playlist_btn.clicked.connect(self.add_currently_playing_to_a_playlist)
+
         self.show()
 
         def moveApp(event):
@@ -146,11 +163,17 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
                    )
                )
 
-    #play song
+    # Play Song
     def play_song(self):
         try:
-            current_selection = self.loaded_songs_listWidget.currentRow()
-            current_song = songs.current_song_list[current_selection]
+            global stopped
+            stopped = False
+            if self.stackedWidget.currentIndex() == 0:
+                current_selection = self.loaded_songs_listWidget.currentRow()
+                current_song = songs.current_song_list[current_selection]
+            elif self.stackedWidget.currentIndex() == 2:
+                current_selection = self.favourites_listWidget.currentRow()
+                current_song = songs.favourites_songs_list[current_selection]
 
             song_url = QMediaContent(QUrl.fromLocalFile(current_song))
             self.player.setMedia(song_url)
@@ -159,7 +182,7 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
             self.current_song_name.setText(f'{os.path.basename(current_song)}')
             self.current_song_path.setText(f'{os.path.dirname(current_song)}')
         except Exception as e:
-            print(f"play song error {e}")
+            print(f"play song error: {e}")
 
 
     #pause song
