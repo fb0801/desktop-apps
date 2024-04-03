@@ -521,3 +521,50 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
             print(f"Deleting playlist error: {e}")
         finally:
             self.load_playlists()
+
+    
+    # Delete all playlists
+    def delete_all_playlists(self):
+        playlists = get_playlist_tables()
+        playlists.remove('favourites')
+
+        caution = QMessageBox.question(
+            self, 'Delete all playlists',
+            'This action will delete all playlists and it cannot be reversed.\n'
+            'Continue?',
+            QMessageBox.Yes | QMessageBox.Cancel, QMessageBox.Cancel
+        )
+        if caution == QMessageBox.Yes:
+            try:
+                for playlist in playlists:
+                    delete_database_table(playlist)
+            except Exception as e:
+                print(f"Deleting all playlists error: {e}")
+            finally:
+                self.load_playlists()
+
+
+    # Add a song to a playlist
+    def add_a_song_to_a_playlist(self):
+        options = get_playlist_tables()
+        options.remove('favourites')
+        options.insert(0, '--Click to Select--')
+        playlist, _ = QtWidgets.QInputDialog.getItem(
+            self, 'Add song to playlist',
+            'Choose the desired playlist', options, editable=False
+        )
+        if playlist == '--Click to Select--':
+            QMessageBox.information(self, 'Add song to playlist', 'No playlist was selected')
+            return
+
+        try:
+            current_index = self.loaded_songs_listWidget.currentRow()
+            song = songs.current_song_list[current_index]
+        except Exception as e:
+            QMessageBox.information(self, 'Unsuccessful', 'No song was selected')
+            return
+        add_song_to_database_table(song=song, table=playlist)
+        self.load_playlists()
+
+
+        
