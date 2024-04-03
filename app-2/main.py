@@ -66,6 +66,8 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.next_btn.clicked.connect(self.next_song)
         self.previous_btn.clicked.connect(self.previous_song)
         self.volume_dial.valueChanged.connect(lambda: self.volume_changed())
+        self.shuffle_songs_btn.clicked.connect(self.shuffle_playlist)
+        self.loop_one_btn.clicked.connect(self.loop_one_song)
 
         self.show()
 
@@ -81,6 +83,11 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
     # func to handle mouse pos
     def mousePressEvent(self, event):
         self.initialPosition = event.globalPos()
+
+    #func to determine end of song
+    def song_finished(self, status):
+        if status == QMediaPlayer.EndOfMedia:
+            self.next_song()
 
     #move slider
     def move_slider(self):
@@ -271,3 +278,18 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
             self.current_song_path.setText(f'{os.path.dirname(previous_song)}')
         except Exception as e:
             print(f"Next song error: {e}")
+
+
+    def loop_one_song(self):
+        try:
+            global is_shuffled
+            global looped
+
+            if not looped:
+                looped = True
+                self.shuffle_songs_btn.setEnabled(False)
+            else:
+                looped = False
+                self.shuffle_songs_btn.setEnabled(True)
+        except Exception as e:
+            print(f"Looping song error: {e}")
