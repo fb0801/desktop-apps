@@ -87,6 +87,9 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.playlists_btn.clicked.connect(self.switch_to_playlist_tab)
         self.favourites_btn.clicked.connect(self.switch_to_favourites_tab)
 
+        self.volume_dial.valueChanged.connect(lambda: self.volume_changed())
+        self.add_to_fav_btn.clicked.connect(self.add_song_to_favourites)
+
         self.show()
 
         def moveApp(event):
