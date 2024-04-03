@@ -467,3 +467,32 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
             self.load_favourites_into_app()
         except Exception as e:
             print(f"Removing from favourites error: {e}")
+
+# Create a new playlist
+    def new_playlist(self):
+        try:
+            existing = get_playlist_tables()
+            name, _ = QtWidgets.QInputDialog.getText(
+                self, 'Create a new playlist',
+                'Enter playlist name'
+            )
+            if name.strip() == '':
+                QMessageBox.information(self, 'Name Error', 'Playlist name cannot be empty')
+                return
+            else:
+                if name not in existing:
+                    create_database_or_database_table(f'{name}')
+                    self.load_playlists()
+                elif name in existing:
+                    caution = QMessageBox.question(
+                        self, 'Replace Playlist',
+                        f'A playlist with name "{name}" already exists\n'
+                        'Do you want to replace it?',
+                        QMessageBox.Yes | QMessageBox.Cancel, QMessageBox.Cancel
+                    )
+                    if caution == QMessageBox.Yes:
+                        delete_database_table(f'{name}')
+                        create_database_or_database_table(f'{name}')
+                        self.load_playlists()
+        except Exception as e:
+            print(f"Creating a new playlist error: {e}")
