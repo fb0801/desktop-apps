@@ -56,6 +56,7 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
 
         #connections
         #default page
+        self.player.mediaStatusChanged.connect(self.song_finished)
         self.music_slider.sliderMoved[int].connect(
             lambda: self.player.setPosition(self.music_slider.value())
         )
@@ -68,6 +69,8 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.volume_dial.valueChanged.connect(lambda: self.volume_changed())
         self.shuffle_songs_btn.clicked.connect(self.shuffle_playlist)
         self.loop_one_btn.clicked.connect(self.loop_one_song)
+        self.delete_selected_btn.clicked.connect(self.remove_selected_song)
+        self.delete_all_songs_btn.clicked.connect(self.remove_all_songs)
 
         self.show()
 
@@ -293,3 +296,41 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
                 self.shuffle_songs_btn.setEnabled(True)
         except Exception as e:
             print(f"Looping song error: {e}")
+
+    
+     # Remove One Song
+    def remove_selected_song(self):
+        try:
+            if self.loaded_songs_listWidget.count() == 0:
+                QMessageBox.information(
+                    self, 'Remove Selected Song',
+                    'Playlist is empty'
+                )
+                return
+            current_index = self.loaded_songs_listWidget.currentRow()
+            self.loaded_songs_listWidget.takeItem(current_index)
+            songs.current_song_list.pop(current_index)
+        except Exception as e:
+            print(f"Remove selected song error: {e}")
+
+    def remove_all_songs(self):
+        try:
+            if self.loaded_songs_listWidget.count() == 0:
+                QMessageBox.information(
+                    self, 'Remove all Songs',
+                    'Playlist is empty'
+                )
+                return
+            question = QMessageBox.question(
+                self, 'Remove all Songs',
+                'This action will remove all songs from the list and it cannot be reversed.\n'
+                'Continue?',
+                QMessageBox.Yes | QMessageBox.Cancel, QMessageBox.Cancel
+            )
+            if question == QMessageBox.Yes:
+                self.stop_song()
+                self.loaded_songs_listWidget.clear()
+                songs.current_song_list.clear()
+
+        except Exception as e:
+            print(f"Remove all songs error: {e}")
