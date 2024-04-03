@@ -468,6 +468,20 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         except Exception as e:
             print(f"Removing from favourites error: {e}")
 
+
+    def load_playlists(self):
+        playlists = get_playlist_tables()
+        playlists.remove('favourites')
+        self.playlists_listWidget.clear()
+        for playlist in playlists:
+            self.playlists_listWidget.addItem(
+                QListWidgetItem(
+                    QIcon(":/img/utils/images/dialog-music.png"),
+                    playlist
+                )
+            )
+
+
 # Create a new playlist
     def new_playlist(self):
         try:
@@ -496,3 +510,14 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
                         self.load_playlists()
         except Exception as e:
             print(f"Creating a new playlist error: {e}")
+
+
+     # Delete a playlist
+    def delete_playlist(self):
+        playlist = self.playlists_listWidget.currentItem().text()
+        try:
+            delete_database_table(playlist)
+        except Exception as e:
+            print(f"Deleting playlist error: {e}")
+        finally:
+            self.load_playlists()
