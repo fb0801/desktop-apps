@@ -25,6 +25,20 @@ def add_song_to_database_table(song: str, table: str):
 
 
 # Delete all songs from a database table
+def delete_song_from_database_table(song: str, table: str):
+    connection = sqlite3.connect(app_database)
+    cursor = connection.cursor()
+    cursor.execute(
+        f"""
+        DELETE from {table} WHERE 
+        ROWID = (SELECT min(ROWID) from favourites 
+        WHERE song = "{song}");
+        """
+    )
+    connection.commit()
+    connection.close()
+
+# Delete all songs from a database table
 def delete_all_songs_from_database_table(table: str):
     connection = sqlite3.connect(app_database)
     cursor = connection.cursor()
@@ -60,3 +74,12 @@ def get_playlist_tables():
         print(f"Error getting table names: {e}")
     finally:
         connection.close()
+
+
+# Delete a database table
+def delete_database_table(table: str):
+    connection = sqlite3.connect(app_database)
+    cursor = connection.cursor()
+    cursor.execute(f"""DROP TABLE {table}""")
+    connection.commit()
+    connection.close()

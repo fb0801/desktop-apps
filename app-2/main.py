@@ -367,6 +367,23 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.stackedWidget.setCurrentIndex(0)
 
 
+     # FAVOURITE FUNCTIONS
+    # Load Favourite songs
+    def load_favourites_into_app(self):
+        favourite_songs = fetch_all_songs_from_database_table('favourites')
+        songs.favourites_songs_list.clear()
+        self.favourites_listWidget.clear()
+
+        for favourite in favourite_songs:
+            songs.favourites_songs_list.append(favourite)
+            self.favourites_listWidget.addItem(
+                QListWidgetItem(
+                    QIcon(":/img/utils/images/like.png"),
+                    os.path.basename(favourite)
+                )
+            )
+
+
     # Add song to favourites
     def add_song_to_favourites(self):
         current_index = self.loaded_songs_listWidget.currentRow()
@@ -386,3 +403,25 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
             self.load_favourites_into_app()
         except Exception as e:
             print(f"Adding song to favourites error: {e}")
+
+    # Remove song from favourites
+    def remove_song_from_favourites(self):
+        if self.favourites_listWidget.count() == 0:
+            QMessageBox.information(
+                self, 'Remove Song from Favourites',
+                'Favourites list is empty'
+            )
+            return
+        current_index = self.favourites_listWidget.currentRow()
+        if current_index is None:
+            QMessageBox.information(
+                self, 'Remove Song from Favourites',
+                'Select a song to remove from favourites'
+            )
+            return
+        try:
+            song = songs.favourites_songs_list[current_index]
+            delete_song_from_database_table(song=f'{song}', table='favourites')
+            self.load_favourites_into_app()
+        except Exception as e:
+            print(f"Removing from favourites error: {e}")
