@@ -334,3 +334,16 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
 
         except Exception as e:
             print(f"Remove all songs error: {e}")
+
+     # FUNCTIONS TO SWITCH TABS
+    # Switch to Favourites tab
+    def switch_to_favourites_tab(self):
+        self.stackedWidget.setCurrentIndex(2)
+
+    # Switch to Playlists Tab
+    def switch_to_playlist_tab(self):
+        self.stackedWidget.setCurrentIndex(1)
+
+    # Switch to Song List tab
+    def switch_to_songs_tab(self):
+        self.stackedWidget.setCurrentIndex(0)
