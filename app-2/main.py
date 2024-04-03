@@ -195,19 +195,21 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
 #stop song
     def stop_song(self):
         try:
-            
             self.player.stop()
+            self.music_slider.setValue(0)
+            self.time_label.setText(f'00:00:00 / 00:00:00')
+            self.current_song_name.setText(f'Song name goes here')
+            self.current_song_path.setText(f'Song path goes here')
         except Exception as e:
-            print(f"stop song error {e}")
+            print(f"Stop song error: {e}")
 
-#func to change volume
+# Function to change the volume
     def volume_changed(self):
         try:
             self.initial_volume = self.volume_dial.value()
             self.player.setVolume(self.initial_volume)
-
         except Exception as e:
-            print(f"volume change error: {e}")
+            print(f"Volume change error: {e}")
 
     def default_next(self):
         try:
@@ -308,20 +310,37 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
     #prev song
     def previous_song(self):
         try:
-            current_media = self.player.media()
-            current_song_url = current_media.canonicalUrl().path()[1:]
-            song_index = songs.current_song_list.index(current_song_url)
-            previous_index = song_index - 1
-            previous_song = songs.current_song_list[previous_index]
+            if self.stackedWidget.currentIndex() == 0:
+                current_media = self.player.media()
+                current_song_url = current_media.canonicalUrl().path()[1:]
+
+                song_index = songs.current_song_list.index(current_song_url)
+                if song_index == 0:
+                    previous_index = len(songs.current_song_list) - 1
+                else:
+                    previous_index = song_index - 1
+                previous_song = songs.current_song_list[previous_index]
+                self.loaded_songs_listWidget.setCurrentRow(previous_index)
+            elif self.stackedWidget.currentIndex() == 2:
+                current_media = self.player.media()
+                current_song_url = current_media.canonicalUrl().path()[1:]
+
+                song_index = songs.favourites_songs_list.index(current_song_url)
+                if song_index == 0:
+                    previous_index = len(songs.favourites_songs_list) - 1
+                else:
+                    previous_index = song_index - 1
+                previous_song = songs.favourites_songs_list[previous_index]
+                self.favourites_listWidget.setCurrentRow(previous_index)
             song_url = QMediaContent(QUrl.fromLocalFile(previous_song))
             self.player.setMedia(song_url)
             self.player.play()
-            self.loaded_songs_listWidget.setCurrentRow(previous_index)
 
             self.current_song_name.setText(f'{os.path.basename(previous_song)}')
             self.current_song_path.setText(f'{os.path.dirname(previous_song)}')
+
         except Exception as e:
-            print(f"Next song error: {e}")
+            print(f"Next Song error: {e}")
 
 
     def loop_one_song(self):
