@@ -362,3 +362,24 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
     # Switch to Song List tab
     def switch_to_songs_tab(self):
         self.stackedWidget.setCurrentIndex(0)
+
+
+    # Add song to favourites
+    def add_song_to_favourites(self):
+        current_index = self.loaded_songs_listWidget.currentRow()
+        if current_index is None:
+            QMessageBox.information(
+                self, 'Add Songs to Favourites',
+                'Select a song to add to favourites'
+            )
+            return
+        try:
+            song = songs.current_song_list[current_index]
+            add_song_to_database_table(song=f"{song}", table='favourites')
+            # QMessageBox.information(
+            #     self, 'Add Songs to Favourites',
+            #     f'{os.path.basename(song)} was successfully added to favourites'
+            # )
+            self.load_favourites_into_app()
+        except Exception as e:
+            print(f"Adding song to favourites error: {e}")
