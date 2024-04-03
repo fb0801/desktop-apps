@@ -6,11 +6,17 @@ import songs
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 
 
+
 import random
 import time
 
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import Qt, QUrl, QTimer
+
+from db_functions import create_database_or_database_table, add_song_to_database_table, \
+    fetch_all_songs_from_database_table, delete_song_from_database_table, delete_all_songs_from_database_table, \
+    get_playlist_tables, delete_database_table
+
 
 
 
@@ -34,6 +40,12 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         stopped = False
         looped = True
         is_shuffled = False
+
+        # Database Stuff
+       
+        create_database_or_database_table('favourites')
+        self.load_favourites_into_app()
+        self.load_playlists()
 
         #create player
         self.player = QMediaPlayer()
@@ -71,6 +83,9 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.loop_one_btn.clicked.connect(self.loop_one_song)
         self.delete_selected_btn.clicked.connect(self.remove_selected_song)
         self.delete_all_songs_btn.clicked.connect(self.remove_all_songs)
+        self.song_list_btn.clicked.connect(self.switch_to_songs_tab)
+        self.playlists_btn.clicked.connect(self.switch_to_playlist_tab)
+        self.favourites_btn.clicked.connect(self.switch_to_favourites_tab)
 
         self.show()
 
