@@ -672,4 +672,24 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.playlists_listWidget.addAction(self.actionDelete_Selected_Playlist)
         self.playlists_listWidget.addAction(self.actionDelete_All_Playlists)
 
-   
+    # Loaded Songs Context Menu
+    def loaded_songs_context_menu(self):
+        self.loaded_songs_listWidget.setContextMenuPolicy(Qt.ActionsContextMenu)
+        self.loaded_songs_listWidget.addAction(self.actionPlay)
+        self.loaded_songs_listWidget.addAction(self.actionPause_Unpause)
+        separator = QAction(self)
+        separator.setSeparator(True)
+        self.loaded_songs_listWidget.addAction(self.actionPrevious)
+        self.loaded_songs_listWidget.addAction(self.actionNext)
+        self.loaded_songs_listWidget.addAction(self.actionStop)
+        separator = QAction(self)
+        separator.setSeparator(True)
+        self.loaded_songs_listWidget.addAction(self.actionAdd_Selected_to_Favourites)
+        self.loaded_songs_listWidget.addAction(self.actionAdd_Selected_to_Favourites)
+        self.loaded_songs_listWidget.addAction(self.actionAdd_all_to_Favouries)
+        separator = QAction(self)
+        separator.setSeparator(True)
+        self.loaded_songs_listWidget.addAction(self.actionSave_Selected_to_a_Playlist)
+        self.loaded_songs_listWidget.addAction(self.actionSave_all_to_a_playlist)
+
+    
