@@ -107,6 +107,21 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.remove_all_playlists_btn.clicked.connect(self.delete_all_playlists)
         self.add_to_playlist_btn.clicked.connect(self.add_currently_playing_to_a_playlist)
 
+        try:
+            self.load_selected_playlist_btn.clicked.connect(
+                lambda: self.load_playlist_songs_to_current_list(
+                    self.playlists_listWidget.currentItem().text()
+                )
+            )
+
+            self.actionLoad_Selected_Playlist.triggered.connect(
+                lambda: self.load_playlist_songs_to_current_list(
+                    self.playlists_listWidget.currentItem().text()
+                )
+            )
+        except:
+            pass
+
         self.show()
 
         def moveApp(event):
@@ -567,4 +582,48 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.load_playlists()
 
 
-        
+    # Add all current songs to a playlist
+    def add_all_current_songs_to_a_playlist(self):
+        options = get_playlist_tables()
+        options.remove('favourites')
+        options.insert(0, '--Click to Select--')
+        playlist, _ = QtWidgets.QInputDialog.getItem(
+            self, 'Add song to playlist',
+            'Choose the desired playlist', options, editable=False
+        )
+        if playlist == '--Click to Select--':
+            QMessageBox.information(self, 'Add song to playlist', 'No playlist was selected')
+            return
+        if len(songs.current_song_list) < 1:
+            QMessageBox.information(
+                self, 'Add songs to playlist',
+                'Song list is empty'
+            )
+            return
+        for song in songs.current_song_list:
+            add_song_to_database_table(song=song, table=playlist)
+        self.load_playlists()
+
+    # Add currently playing to a playlist
+    def add_currently_playing_to_a_playlist(self):
+        if not self.player.state() == QMediaPlayer.PlayingState:
+            QMessageBox.information(
+                self, 'Add current song to playlist',
+                'No song is playing in queue.'
+            )
+            return
+        options = get_playlist_tables()
+        options.remove('favourites')
+        options.insert(0, '--Click to Select--')
+        playlist, _ = QtWidgets.QInputDialog.getItem(
+            self, 'Add song to playlist',
+            'Choose the desired playlist', options, editable=False
+        )
+        if playlist == '--Click to Select--':
+            QMessageBox.information(self, 'Add song to playlist', 'No playlist was selected')
+            return
+
+        current_media = self.player.media()
+        song = current_media.canonicalUrl().path()[1:]
+        add_song_to_database_table(song=song, table=playlist)
+        self.load_playlists()
