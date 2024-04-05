@@ -18,7 +18,8 @@ from db_functions import create_database_or_database_table, add_song_to_database
     get_playlist_tables, delete_database_table
 
 
-
+def create_db_dir():
+    os.makedirs('.dbs', exist_ok=True)
 
 
 class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
@@ -32,17 +33,24 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.SetWindowFlags(Qt.FrameLessWindowHint)
 
-        #globals
-        global stopped 
-        global looped 
-        global is_shuffled 
+         # Globals
+        global stopped
+        global looped
+        global is_shuffled
+        global slide_index
 
         stopped = False
-        looped = True
+        looped = False
         is_shuffled = False
+        slide_index = 0
+
+        # Context Menus
+        self.playlist_context_menu()
+        self.loaded_songs_context_menu()
+        self.favourite_songs_context_menu()
 
         # Database Stuff
-       
+        create_db_dir()
         create_database_or_database_table('favourites')
         self.load_favourites_into_app()
         self.load_playlists()
@@ -90,6 +98,14 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.volume_dial.valueChanged.connect(lambda: self.volume_changed())
         self.add_to_fav_btn.clicked.connect(self.add_song_to_favourites)
 
+
+         # Default Page Actions
+        self.actionPlay.triggered.connect(self.play_song)
+        self.actionPause_Unpause.triggered.connect(self.pause_and_unpause)
+        self.actionNext.triggered.connect(self.next_song)
+        self.actionPrevious.triggered.connect(self.previous_song)
+        self.actionStop.triggered.connect(self.stop_song)
+
         # FAVOURITES
         self.delete_selected_favourite_btn.clicked.connect(self.remove_song_from_favourites)
         self.delete_all_favourites_btn.clicked.connect(self.remove_all_songs_from_favourites)
@@ -122,6 +138,12 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         except:
             pass
 
+        # Playlist Actions
+        self.actionSave_all_to_a_playlist.triggered.connect(self.add_all_current_songs_to_a_playlist)
+        self.actionSave_Selected_to_a_Playlist.triggered.connect(self.add_a_song_to_a_playlist)
+        self.actionDelete_All_Playlists.triggered.connect(self.delete_all_playlists)
+        self.actionDelete_Selected_Playlist.triggered.connect(self.delete_playlist)
+
         self.show()
 
         def moveApp(event):
@@ -131,7 +153,6 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
                 event.accept()
 
         self.title_frame.mouseMoveEvent = moveApp
-
 
     # func to handle mouse pos
     def mousePressEvent(self, event):
@@ -693,3 +714,20 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         self.loaded_songs_listWidget.addAction(self.actionSave_all_to_a_playlist)
 
     
+     # Favourite Songs Context Menu
+    def favourite_songs_context_menu(self):
+        self.favourites_listWidget.setContextMenuPolicy(Qt.ActionsContextMenu)
+        self.favourites_listWidget.addAction(self.actionRemove_Selected_Favourite)
+        self.favourites_listWidget.addAction(self.actionRemove_All_Favourites)
+
+    # Slideshow
+    def slideshow(self):
+        images_path = os.path.join(os.getcwd(), os.path.join('utils', 'bg_imgs'))
+        images = os.listdir(images_path)
+        images.remove('bg_overlay.png')
+        global slide_index
+
+        next_slide = images[slide_index]
+        next_image = QtGui.QPixmap(os.path.join(images_path, f'{next_slide}'))
+        self.background_image.setPixmap(next_image)
+        slide_index += 1
