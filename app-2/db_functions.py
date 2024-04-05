@@ -1,3 +1,4 @@
+
 import os
 import sqlite3
 
@@ -12,7 +13,6 @@ def create_database_or_database_table(table_name: str):
     cursor.execute(f"""CREATE TABLE IF NOT EXISTS {table_name} (song TEXT)""")
     connection.commit()
     connection.close()
-
 
 
 # Add a song to a database table
@@ -37,6 +37,7 @@ def delete_song_from_database_table(song: str, table: str):
     )
     connection.commit()
     connection.close()
+
 
 # Delete all songs from a database table
 def delete_all_songs_from_database_table(table: str):
