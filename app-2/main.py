@@ -17,6 +17,7 @@ from db_functions import create_database_or_database_table, add_song_to_database
     fetch_all_songs_from_database_table, delete_song_from_database_table, delete_all_songs_from_database_table, \
     get_playlist_tables, delete_database_table
 
+from playlist_popup import PlaylistDialog
 
 def create_db_dir():
     os.makedirs('.dbs', exist_ok=True)
@@ -681,6 +682,17 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
                 )
         except Exception as e:
             print(f"Loading songs from playlist: {playlist}: {e}")
+
+      # Show Playlist Content
+    def show_playlist_content(self):
+        try:
+            playlist = self.playlists_listWidget.currentItem().text()
+            songs = fetch_all_songs_from_database_table(playlist)
+            songs_only = [os.path.basename(song) for song in songs]
+            playlist_dialog = PlaylistDialog(songs_only, f'{playlist}')
+            playlist_dialog.exec_()
+        except Exception as e:
+            print(f"Showing Playlist Content error: {e}")
 
 
      # CONTEXT MENUS
