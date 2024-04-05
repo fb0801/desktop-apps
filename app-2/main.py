@@ -627,3 +627,24 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
         song = current_media.canonicalUrl().path()[1:]
         add_song_to_database_table(song=song, table=playlist)
         self.load_playlists()
+
+     # Load playlists songs to current list
+    def load_playlist_songs_to_current_list(self, playlist):
+        try:
+            playlist_songs = fetch_all_songs_from_database_table(playlist)
+            if len(playlist_songs) == 0:
+                QMessageBox.information(
+                    self, 'Load playlist song',
+                    'Playlist is empty'
+                )
+                return
+            for song in playlist_songs:
+                songs.current_song_list.append(song)
+                self.loaded_songs_listWidget.addItem(
+                    QListWidgetItem(
+                        QIcon(':/img/utils/images/MusicListItem.png'),
+                        os.path.basename(song)
+                    )
+                )
+        except Exception as e:
+            print(f"Loading songs from playlist: {playlist}: {e}")
