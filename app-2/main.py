@@ -440,6 +440,18 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
                 )
             )
 
+    # Add all songs to favourites
+    def add_all_songs_to_favourites(self):
+        if len(songs.current_song_list) < 1:
+            QMessageBox.information(
+                self, 'Add songs to favourites',
+                'No songs have been loaded'
+            )
+            return
+        for song in songs.current_song_list:
+            add_song_to_database_table(song, 'favourites')
+        self.load_favourites_into_app()
+
 
     # Add song to favourites
     def add_song_to_favourites(self):
@@ -648,3 +660,16 @@ class ModernMusicPlayer(QMainWindow, Ui_MusicApp):
                 )
         except Exception as e:
             print(f"Loading songs from playlist: {playlist}: {e}")
+
+
+     # CONTEXT MENUS
+    # Playlist Contex Menu
+    def playlist_context_menu(self):
+        self.playlists_listWidget.setContextMenuPolicy(Qt.ActionsContextMenu)
+        self.playlists_listWidget.addAction(self.actionLoad_Selected_Playlist)
+        separator = QAction(self)
+        separator.setSeparator(True)
+        self.playlists_listWidget.addAction(self.actionDelete_Selected_Playlist)
+        self.playlists_listWidget.addAction(self.actionDelete_All_Playlists)
+
+   
